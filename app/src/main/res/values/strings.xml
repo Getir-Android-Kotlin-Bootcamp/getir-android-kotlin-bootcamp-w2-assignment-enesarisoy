@@ -5,4 +5,6 @@
     <string name="skip">Skip</string>
     <string name="select_the_favorites_menu">Select the \nFavorites Menu</string>
     <string name="now_eat_well_don_t_leave_the_house_you_can_choose_your_favorite_food_only_with_one_click">Now eat well, don\'t leave the house,You can choose your favorite food only with\n one click</string>
+    <string name="good_food_at_a_cheap_price">Good food at a\ncheap price</string>
+    <string name="you_can_eat_at_expensive_restaurants_with_affordable_price">You can eat at expensive restaurants with affordable price</string>
 </resources>
