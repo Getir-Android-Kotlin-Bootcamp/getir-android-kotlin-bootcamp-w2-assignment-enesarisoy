@@ -20,4 +20,12 @@
         <item name="textAllCaps">false</item>
         <item name="fontFamily">@font/poppins_bold</item>
     </style>
+    
+    <style name="AccountTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontWeight">500</item>
+    </style>
+
 </resources>
