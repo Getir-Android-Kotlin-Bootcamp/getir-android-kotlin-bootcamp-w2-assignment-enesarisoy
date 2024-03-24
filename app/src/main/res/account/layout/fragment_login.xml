@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateAccountFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="34dp"
+        android:layout_marginTop="29sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvEmail"
+            style="@style/AccountTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/email_address" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvInputEmail"
+            style="?attr/textInputOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:boxStrokeColor="#66F6F6F6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:textColor="#3B3B3B"
+                android:textColorHint="#3B3B3B" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/tvPassword"
+            style="@style/AccountTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/password" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvInputPassword"
+            style="?attr/textInputOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:boxStrokeColor="#66F6F6F6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="#3B3B3B"
+                android:textColorHint="#3B3B3B" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="117dp"
+            android:layout_height="36dp"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/forget_password"
+            android:textColor="#FF0000"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnSignUp"
+            style="@style/button_gradient_style"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/roboto_black"
+            android:text="@string/login" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginHorizontal="96dp"
+            android:layout_marginVertical="13dp"
+            android:background="#D2D4D8" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGoogleSignUp"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="13dp"
+            android:background="@drawable/google_button"
+            android:drawableLeft="@drawable/ic_google"
+            android:drawablePadding="24dp"
+            android:elevation="0dp"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingStart="35dp"
+            android:text="@string/login_with_google"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>
