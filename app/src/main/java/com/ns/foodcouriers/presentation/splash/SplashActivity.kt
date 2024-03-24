@@ -1,13 +1,11 @@
-package com.ns.foodcouriers
+package com.ns.foodcouriers.presentation.splash
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.ns.foodcouriers.R
+import com.ns.foodcouriers.presentation.account.AccountActivity
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {

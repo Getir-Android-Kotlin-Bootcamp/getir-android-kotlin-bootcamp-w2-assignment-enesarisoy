@@ -13,7 +13,7 @@
         android:theme="@style/Theme.FoodCouriers"
         tools:targetApi="31">
         <activity
-            android:name=".SplashActivity"
+            android:name=".presentation.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".AccountActivity"
+            android:name=".presentation.account.AccountActivity"
             android:exported="true" />
 
         <activity
