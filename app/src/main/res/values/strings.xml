@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Food Couriers</string>
     <string name="food_couriers">Food Couriers</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="select_the_favorites_menu">Select the \nFavorites Menu</string>
+    <string name="now_eat_well_don_t_leave_the_house_you_can_choose_your_favorite_food_only_with_one_click">Now eat well, don\'t leave the house,You can choose your favorite food only with\n one click</string>
 </resources>
