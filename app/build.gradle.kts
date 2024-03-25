@@ -41,7 +41,8 @@ android {
                 "src/main/res/onboarding",
                 "src/main/res/profile",
                 "src/main/res/account",
-                "src/main/res/splash"
+                "src/main/res/splash",
+                "src/main/res/location"
             )
         }
     }
