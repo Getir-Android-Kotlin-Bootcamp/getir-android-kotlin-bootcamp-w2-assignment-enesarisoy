@@ -84,13 +84,14 @@
 
         <Button
             android:id="@+id/btnSignUp"
-            style="@style/button_gradient_style"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="36dp"
+            android:background="@drawable/button_solid_color"
             android:fontFamily="@font/roboto_black"
-            android:text="@string/sign_up" />
+            android:text="@string/sign_up"
+            android:textSize="14sp" />
 
         <View
             android:id="@+id/divider2"
