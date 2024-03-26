@@ -22,19 +22,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvInputName"
-            style="?attr/textInputOutlinedStyle"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            app:boxStrokeColor="#F6F6F6"
-            app:boxStrokeWidth="1dp">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="#3B3B3B"
-                android:textColorHint="#3B3B3B" />
+                android:layout_height="match_parent"
+                android:hint="Enes Arısoy" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,18 +45,16 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvInputEmail"
-            style="?attr/textInputOutlinedStyle"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            app:boxStrokeColor="#66F6F6F6">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
-                android:textColor="#3B3B3B"
-                android:textColorHint="#3B3B3B" />
+                android:hint="test@test.com"
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,19 +69,16 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvInputPassword"
-            style="?attr/textInputOutlinedStyle"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            app:boxStrokeColor="#66F6F6F6">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="#3B3B3B"
-                android:textColorHint="#3B3B3B" />
+                android:hint="**** **** ****"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
