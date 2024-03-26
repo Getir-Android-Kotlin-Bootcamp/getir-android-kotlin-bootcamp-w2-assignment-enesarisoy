@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.account.CreateAccountFragment">
+    tools:context=".presentation.account.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,18 +23,16 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvInputEmail"
-            style="?attr/textInputOutlinedStyle"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            app:boxStrokeColor="#66F6F6F6">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:textColor="#3B3B3B"
-                android:textColorHint="#3B3B3B" />
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,29 +47,27 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvInputPassword"
-            style="?attr/textInputOutlinedStyle"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            app:boxStrokeColor="#66F6F6F6">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="#3B3B3B"
-                android:textColorHint="#3B3B3B" />
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tvForgetPassword"
             android:layout_width="117dp"
             android:layout_height="36dp"
             android:layout_gravity="end"
-            android:gravity="center"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
             android:text="@string/forget_password"
             android:textColor="#FF0000"
             android:textSize="12sp" />
@@ -94,24 +90,16 @@
             android:layout_marginVertical="13dp"
             android:background="#D2D4D8" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnGoogleSignUp"
+        <Button
+            android:id="@+id/btnGoogleLogin"
+            style="@style/GoogleLoginButtonStyle"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="13dp"
-            android:background="@drawable/google_button"
-            android:drawableLeft="@drawable/ic_google"
-            android:drawablePadding="24dp"
-            android:elevation="0dp"
-            android:fontFamily="@font/poppins_bold"
             android:paddingStart="35dp"
-            android:text="@string/login_with_google"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black" />
+            android:text="@string/login_with_google" />
 
 
     </LinearLayout>
