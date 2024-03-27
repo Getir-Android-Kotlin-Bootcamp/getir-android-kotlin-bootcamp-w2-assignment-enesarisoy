@@ -21,4 +21,5 @@
     <string name="where_is_your_location">Where is your location</string>
     <string name="your_location">Your Location</string>
     <string name="set_location">Set Location</string>
+    <string name="chat">Chat</string>
 </resources>

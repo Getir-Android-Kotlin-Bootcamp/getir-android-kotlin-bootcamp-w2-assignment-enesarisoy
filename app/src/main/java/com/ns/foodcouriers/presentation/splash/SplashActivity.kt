@@ -3,6 +3,7 @@ package com.ns.foodcouriers.presentation.splash
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.ns.foodcouriers.MainActivity
 import com.ns.foodcouriers.R
 import com.ns.foodcouriers.presentation.account.AccountActivity
 import kotlinx.coroutines.GlobalScope
@@ -13,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val intent = Intent(this@SplashActivity, AccountActivity::class.java)
+        val intent = Intent(this@SplashActivity, MainActivity::class.java)
         GlobalScope.launch {
 //            delay(4000)
             startActivity(intent)

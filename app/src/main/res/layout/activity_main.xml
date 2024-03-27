@@ -7,7 +7,6 @@
     tools:context=".MainActivity">
 
 
-
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -42,6 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="43dp"
@@ -61,24 +61,32 @@
             android:adjustViewBounds="true"
             android:src="@drawable/location_search" />
 
-
-        <EditText
-            android:id="@+id/etSearch"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/autoCompleteFragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="0dp"
             android:layout_height="28dp"
             android:layout_marginStart="6dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/roboto_black"
-            android:hint="@string/where_is_your_location"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:lines="1"
-            android:paddingStart="14dp"
-            android:textColorHint="#000000"
-            android:textSize="12sp" />
+            android:background="@drawable/location_search_field" />
+
 
     </LinearLayout>
+    <!--        <EditText-->
+    <!--            android:id="@+id/etSearch"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="28dp"-->
+    <!--            android:layout_marginStart="6dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:fontFamily="@font/roboto_black"-->
+    <!--            android:hint="@string/where_is_your_location"-->
+    <!--            android:imeOptions="actionSearch"-->
+    <!--            android:inputType="text"-->
+    <!--            android:lines="1"-->
+    <!--            android:paddingStart="14dp"-->
+    <!--            android:textColorHint="#000000"-->
+    <!--            android:textSize="12sp" />-->
 
 
     <com.google.android.material.card.MaterialCardView
@@ -124,16 +132,18 @@
                 app:layout_constraintTop_toBottomOf="@id/tvYourLocation" />
 
             <TextView
-                android:id="@+id/tvAdress"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvAddress"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="9dp"
+                android:layout_marginEnd="28dp"
                 android:fontFamily="@font/poppins_medium"
                 android:lineHeight="20dp"
                 android:text="109, Freedom Way, Off Lekki Phase\nVictoria Island, Lagos."
                 android:textColor="#09051C"
                 android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivMarkerCard"
                 app:layout_constraintTop_toBottomOf="@id/tvYourLocation" />
 
