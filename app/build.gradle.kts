@@ -94,4 +94,6 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
+    implementation("com.github.skydoves:balloon:1.6.4")
+
 }

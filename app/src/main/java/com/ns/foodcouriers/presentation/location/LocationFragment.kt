@@ -1,6 +1,7 @@
 package com.ns.foodcouriers.presentation.location
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
@@ -12,8 +13,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -27,6 +30,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ns.foodcouriers.R
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.Balloon
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.showAlignTop
 
 
 class LocationFragment : Fragment(), OnMapReadyCallback {
@@ -60,14 +68,17 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            requestPermissions(
+                arrayOf(
+                    "android.permission.ACCESS_COARSE_LOCATION",
+                    "android.permission.ACCESS_FINE_LOCATION"
+                ),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
         }
         return inflater.inflate(R.layout.fragment_location, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -106,9 +117,31 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
         // We need for get the current location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        onClickMarker(view)
 
 
     }
+
+    private fun setAddressToTextView(addresses: List<Address>?) {
+        addresses?.let {
+            if (it.isNotEmpty()) {
+                val address = addresses[0]
+                val addressText = address.getAddressLine(0)
+                tvAddress.text = addressText
+
+                Log.d("Main Activity", "Current Location: $address")
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "No address found",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+    }
+
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -135,6 +168,24 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
         mMap.isMyLocationEnabled = true
 
+
+        getLocation()
+        // Set marker to map when we click
+        mMap.setOnMapLongClickListener {
+            val geocoder = Geocoder(requireContext())
+            val currentAddress: MutableList<Address>? =
+                geocoder.getFromLocation(
+                    it.latitude,
+                    it.longitude,
+                    1
+                )
+            placeMarkerOnMap(it, mMap.cameraPosition.zoom)
+            setAddressToTextView(currentAddress)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
         // Get current location info
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             location?.let {
@@ -175,10 +226,28 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 placeMarkerOnMap(LatLng(location.latitude, location.longitude))
             }
         }
+    }
 
-        // Set marker to map when we click
-        mMap.setOnMapLongClickListener {
-            placeMarkerOnMap(it, mMap.cameraPosition.zoom)
+    private fun onClickMarker(view: View) {
+        val ivMarkerCard = view.findViewById<ImageView>(R.id.ivMarkerCard)
+        val balloon = Balloon.Builder(requireContext())
+            .setWidth(BalloonSizeSpec.WRAP)
+            .setHeight(BalloonSizeSpec.WRAP)
+            .setText("Click to see your location!")
+            .setTextColorResource(R.color.black)
+            .setTextSize(15f)
+            .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+            .setArrowSize(10)
+            .setArrowPosition(0.5f)
+            .setArrowColorResource(R.color.arrow_color)
+            .setPadding(12)
+            .setCornerRadius(8f)
+            .setBackgroundDrawableResource(R.drawable.indicator_gradient)
+            .setBalloonAnimation(BalloonAnimation.ELASTIC)
+            .build()
+        ivMarkerCard.showAlignTop(balloon)
+        ivMarkerCard.setOnClickListener {
+            getLocation()
         }
     }
 
@@ -223,16 +292,17 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                setupMap()
+                Log.d("onRequestPermissionsResult", "permission granted")
+
+                getLocation()
             } else {
                 Log.d(
-                    "Main Activity",
+                    "onRequestPermissionsResult",
                     "YOOOOU DIDN'TTTT GIVE A PERMISSION. YOOOU SHALL NOT PASSSSS!!!!"
                 )
             }
         }
     }
 }
-
 
 

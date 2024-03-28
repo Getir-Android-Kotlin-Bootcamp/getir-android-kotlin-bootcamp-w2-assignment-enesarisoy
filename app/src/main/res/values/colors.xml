@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="splash_text">#D61355</color>
     <color name="primary_color">#D61355</color>
+    <color name="arrow_color">#ffebeb</color>
     <color name="mtrl_textinput_default_box_stroke_color">#66F6F6F6</color>
 </resources>
