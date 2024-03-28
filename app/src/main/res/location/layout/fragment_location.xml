@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".presentation.location.LocationFragment">
 
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/ivBack"
         android:layout_width="45dp"
@@ -49,9 +60,8 @@
             android:adjustViewBounds="true"
             android:src="@drawable/location_search" />
 
-
-        <EditText
-            android:id="@+id/etSearch"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="28dp"
             android:layout_marginStart="6dp"
@@ -63,8 +73,14 @@
             android:inputType="text"
             android:lines="1"
             android:paddingStart="14dp"
-            android:textColorHint="#000000"
-            android:textSize="12sp" />
+            android:queryHint="Where is your location"
+            android:searchHintIcon="@null"
+            android:textColorHint="#FF0000"
+            android:textSize="12sp"
+            app:defaultQueryHint="Where is your location"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
+            app:searchIcon="@null" />
 
     </LinearLayout>
 
@@ -112,16 +128,18 @@
                 app:layout_constraintTop_toBottomOf="@id/tvYourLocation" />
 
             <TextView
-                android:id="@+id/tvAdress"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvAddress"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="9dp"
+                android:layout_marginEnd="28dp"
                 android:fontFamily="@font/poppins_medium"
                 android:lineHeight="20dp"
                 android:text="109, Freedom Way, Off Lekki Phase\nVictoria Island, Lagos."
                 android:textColor="#09051C"
                 android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivMarkerCard"
                 app:layout_constraintTop_toBottomOf="@id/tvYourLocation" />
 

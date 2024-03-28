@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ns.foodcouriers.MainActivity
 import com.ns.foodcouriers.R
-import com.ns.foodcouriers.presentation.account.AccountActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -19,5 +18,6 @@ class SplashActivity : AppCompatActivity() {
 //            delay(4000)
             startActivity(intent)
         }
+
     }
 }

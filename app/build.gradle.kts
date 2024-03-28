@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("androidx.navigation.safeargs")
 
 }
 
@@ -85,7 +86,12 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.gms:play-services-location:18.0.0")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:${libs.plugins.jetbrainsKotlinAndroid}"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.23"))
     implementation("com.google.android.libraries.places:places:3.3.0")
+
+    val nav_version = "2.7.7"
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
 }
