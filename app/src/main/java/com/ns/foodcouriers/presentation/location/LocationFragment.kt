@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -16,11 +17,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,6 +29,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.ns.foodcouriers.BuildConfig
 import com.ns.foodcouriers.R
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
@@ -39,10 +44,12 @@ import com.skydoves.balloon.showAlignTop
 
 class LocationFragment : Fragment(), OnMapReadyCallback {
 
+    // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var currentLocation: Location
     private lateinit var mMap: GoogleMap
     private lateinit var tvAddress: TextView
+    private lateinit var autocompleteSupportFragment: AutocompleteSupportFragment
 
     companion object {
         const val LOCATION_PERMISSION_REQUEST_CODE = 1001
@@ -51,6 +58,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Places.initialize(requireContext(), BuildConfig.MAPS_API_KEY)
     }
 
     override fun onCreateView(
@@ -84,28 +92,26 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         tvAddress = view.findViewById(R.id.tvAddress)
-        val searchView = view.findViewById<SearchView>(R.id.searchView)
+        autocompleteSupportFragment =
+            childFragmentManager.findFragmentById(R.id.autoCompleteFragment) as AutocompleteSupportFragment
 
-        val searchEditText =
-            searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-
-        // Change the color of the editText inside searchView
-        val textColor = ContextCompat.getColor(requireContext(), R.color.black)
-        searchEditText.setTextColor(textColor)
-
-        val hintTextColor = ContextCompat.getColor(requireContext(), R.color.black)
-        searchEditText.setHintTextColor(hintTextColor)
-
-        // Search the place
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                val searchText = query.toString()
-                searchPlace(searchText, requireContext())
-                return true
+        autocompleteSupportFragment.setPlaceFields(
+            listOf(
+                Place.Field.ID,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG
+            )
+        )
+        autocompleteSupportFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onError(p0: Status) {
+                Toast.makeText(requireContext(), "Some error", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+            override fun onPlaceSelected(place: Place) {
+                place.latLng?.let {
+                    tvAddress.text = place.address
+                    placeMarkerOnMap(it, mMap.cameraPosition.zoom)
+                }
             }
         })
 
@@ -119,8 +125,35 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         onClickMarker(view)
 
+        customizeAutoCompleteSupportFragmentComponents()
+    }
+
+    private fun customizeAutoCompleteSupportFragmentComponents() {
+        autocompleteSupportFragment.requireView()
+            .findViewById<View>(com.google.android.libraries.places.R.id.places_autocomplete_search_button)?.visibility =
+            View.GONE
+        autocompleteSupportFragment.requireView()
+            .findViewById<EditText>(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
+            ?.setHintTextColor(Color.BLACK)
+
+
+        autocompleteSupportFragment.requireView()
+            .findViewById<EditText>(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
+            ?.setHintTextColor(Color.BLACK)
+
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.roboto_black)
+
+        autocompleteSupportFragment.requireView()
+            .findViewById<EditText>(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
+            ?.setTypeface(typeface)
+
+        autocompleteSupportFragment.requireView()
+            .findViewById<EditText>(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
+            ?.textSize = 18f
+
 
     }
+
 
     private fun setAddressToTextView(addresses: List<Address>?) {
         addresses?.let {
@@ -140,7 +173,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
-
 
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -166,7 +198,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             return
         }
 
-        mMap.isMyLocationEnabled = true
+        mMap.isMyLocationEnabled = false
 
 
         getLocation()
@@ -185,7 +217,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLocation() {
+    private fun getLocation(isFirst: Boolean = true) {
         // Get current location info
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             location?.let {
@@ -223,7 +255,12 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 }
 
                 // Mark the location
-                placeMarkerOnMap(LatLng(location.latitude, location.longitude))
+                if (isFirst) {
+                    placeMarkerOnMap(LatLng(location.latitude, location.longitude))
+                } else {
+                    placeMarkerOnMap(LatLng(location.latitude, location.longitude), zoomLevel = 12f)
+
+                }
             }
         }
     }
@@ -247,7 +284,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             .build()
         ivMarkerCard.showAlignTop(balloon)
         ivMarkerCard.setOnClickListener {
-            getLocation()
+            getLocation(isFirst = false)
         }
     }
 
@@ -259,29 +296,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         markerOptions.title("Current Location")
         mMap.addMarker(markerOptions)
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLong, zoomLevel))
-    }
-
-    private fun searchPlace(query: String, context: Context) {
-        Log.d("Fragment Location", "search: $query")
-
-        var addressList: List<Address>? = null
-
-        val geocoder = Geocoder(context)
-
-        try {
-            // As I said, getFromLocation is deprecated but I didn't change it because it requires
-            // higher API level.
-            addressList = geocoder.getFromLocationName(query, 1)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        val address = addressList?.get(0)
-        address?.let {
-            val latLng = LatLng(it.latitude, it.longitude)
-            placeMarkerOnMap(latLng)
-        }
-
     }
 
     override fun onRequestPermissionsResult(

@@ -17,6 +17,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="92dp"
+        android:background="@drawable/location_search_field"
+        android:gravity="center_vertical"
+        app:cardCornerRadius="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/location_search_field">
+
+            <ImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="17dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="28dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/location_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <fragment
+                android:id="@+id/autoCompleteFragment"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/searchIcon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <ImageView
         android:id="@+id/ivBack"
         android:layout_width="45dp"
@@ -41,48 +83,48 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="43dp"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="92dp"
-        android:background="@drawable/location_search_field"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="43dp"-->
+    <!--        android:layout_marginHorizontal="32dp"-->
+    <!--        android:layout_marginTop="92dp"-->
+    <!--        android:background="@drawable/location_search_field"-->
+    <!--        android:gravity="center_vertical"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <ImageView
-            android:layout_width="17dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="28dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/location_search" />
+    <!--        <ImageView-->
+    <!--            android:layout_width="17dp"-->
+    <!--            android:layout_height="16dp"-->
+    <!--            android:layout_marginStart="28dp"-->
+    <!--            android:adjustViewBounds="true"-->
+    <!--            android:src="@drawable/location_search" />-->
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="6dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/roboto_black"
-            android:hint="@string/where_is_your_location"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:lines="1"
-            android:paddingStart="14dp"
-            android:queryHint="Where is your location"
-            android:searchHintIcon="@null"
-            android:textColorHint="#FF0000"
-            android:textSize="12sp"
-            app:defaultQueryHint="Where is your location"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@null"
-            app:searchIcon="@null" />
+    <!--        <androidx.appcompat.widget.SearchView-->
+    <!--            android:id="@+id/searchView"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="28dp"-->
+    <!--            android:layout_marginStart="6dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:fontFamily="@font/roboto_black"-->
+    <!--            android:hint="@string/where_is_your_location"-->
+    <!--            android:imeOptions="actionSearch"-->
+    <!--            android:inputType="text"-->
+    <!--            android:lines="1"-->
+    <!--            android:paddingStart="14dp"-->
+    <!--            android:queryHint="Where is your location"-->
+    <!--            android:searchHintIcon="@null"-->
+    <!--            android:textColorHint="#FF0000"-->
+    <!--            android:textSize="12sp"-->
+    <!--            app:defaultQueryHint="Where is your location"-->
+    <!--            app:iconifiedByDefault="false"-->
+    <!--            app:queryBackground="@null"-->
+    <!--            app:searchIcon="@null" />-->
 
-    </LinearLayout>
+    <!--    </LinearLayout>-->
 
 
     <com.google.android.material.card.MaterialCardView

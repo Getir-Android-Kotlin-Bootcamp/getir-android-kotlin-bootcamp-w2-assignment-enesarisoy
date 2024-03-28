@@ -6,4 +6,5 @@
     <color name="primary_color">#D61355</color>
     <color name="arrow_color">#ffebeb</color>
     <color name="mtrl_textinput_default_box_stroke_color">#66F6F6F6</color>
+    <color name="places_autocomplete_search_text">#707070</color>
 </resources>
