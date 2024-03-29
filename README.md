@@ -20,6 +20,12 @@ This repository is created for the 2nd week assignment. The task is to create a 
 <img src="https://github.com/Getir-Android-Kotlin-Bootcamp/getir-android-kotlin-bootcamp-w2-assignment-enesarisoy/assets/70036852/8627dd46-f737-4c7a-9102-378d1189bda6" width="360" height="800">
 <img src="https://github.com/Getir-Android-Kotlin-Bootcamp/getir-android-kotlin-bootcamp-w2-assignment-enesarisoy/assets/70036852/1b40ae4e-93a4-4d08-9753-423de89bb1e0" width="360" height="800">
 
+## Demo
+
+
+https://github.com/Getir-Android-Kotlin-Bootcamp/getir-android-kotlin-bootcamp-w2-assignment-enesarisoy/assets/70036852/e148f0fb-2227-4151-bc22-8b8edabcfd72
+
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your secrets.properties file. (But this works on normal project right? Because you already gave us the API_KEY :) )
