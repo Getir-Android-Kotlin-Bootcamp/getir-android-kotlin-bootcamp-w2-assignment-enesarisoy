@@ -66,6 +66,7 @@
         android:layout_marginStart="33dp"
         android:layout_marginTop="29dp"
         android:background="@drawable/location_button"
+        style="@style/imageView_gradient_style"
         android:scaleType="center"
         android:src="@drawable/location_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,57 +76,13 @@
         android:id="@+id/ivNotification"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        style="@style/imageView_gradient_style"
         android:layout_marginTop="29dp"
         android:layout_marginEnd="33dp"
-        android:background="@drawable/location_search_field"
         android:scaleType="center"
         android:src="@drawable/location_notification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="43dp"-->
-    <!--        android:layout_marginHorizontal="32dp"-->
-    <!--        android:layout_marginTop="92dp"-->
-    <!--        android:background="@drawable/location_search_field"-->
-    <!--        android:gravity="center_vertical"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <ImageView-->
-    <!--            android:layout_width="17dp"-->
-    <!--            android:layout_height="16dp"-->
-    <!--            android:layout_marginStart="28dp"-->
-    <!--            android:adjustViewBounds="true"-->
-    <!--            android:src="@drawable/location_search" />-->
-
-    <!--        <androidx.appcompat.widget.SearchView-->
-    <!--            android:id="@+id/searchView"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="28dp"-->
-    <!--            android:layout_marginStart="6dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@android:color/transparent"-->
-    <!--            android:fontFamily="@font/roboto_black"-->
-    <!--            android:hint="@string/where_is_your_location"-->
-    <!--            android:imeOptions="actionSearch"-->
-    <!--            android:inputType="text"-->
-    <!--            android:lines="1"-->
-    <!--            android:paddingStart="14dp"-->
-    <!--            android:queryHint="Where is your location"-->
-    <!--            android:searchHintIcon="@null"-->
-    <!--            android:textColorHint="#FF0000"-->
-    <!--            android:textSize="12sp"-->
-    <!--            app:defaultQueryHint="Where is your location"-->
-    <!--            app:iconifiedByDefault="false"-->
-    <!--            app:queryBackground="@null"-->
-    <!--            app:searchIcon="@null" />-->
-
-    <!--    </LinearLayout>-->
-
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="342dp"

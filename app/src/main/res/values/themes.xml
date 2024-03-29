@@ -15,6 +15,14 @@
         <item name="backgroundTint">@null</item>
     </style>
 
+    <style name="imageView_gradient_style" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@drawable/location_search_field</item>
+    </style>
+
+    <style name="imageViewBack_gradient_style" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@drawable/location_button</item>
+    </style>
+
     <style name="TabItemTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16sp</item>
         <item name="lineHeight">24sp</item>

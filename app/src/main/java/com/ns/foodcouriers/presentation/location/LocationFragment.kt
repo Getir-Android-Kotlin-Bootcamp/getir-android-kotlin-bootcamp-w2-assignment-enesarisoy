@@ -171,7 +171,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
         autocompleteSupportFragment.requireView()
             .findViewById<EditText>(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
-            ?.textSize = 18f
+            ?.textSize = 15f
 
     }
 
