@@ -1,4 +1,4 @@
-# Location Fragment with Maps API Integration
+# Week 2 Assignment
 This repository is created for the 2nd week assignment. The task is to create a Location Fragment using the Maps API. The tasks accomplished are as follows:
 
 - Obtaining necessary permissions to use the map.
@@ -14,6 +14,7 @@ This repository is created for the 2nd week assignment. The task is to create a 
 - [Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/overview)
 - [Places SDK for Android](https://developers.google.com/maps/documentation/places/android-sdk/overview)
 - [Balloon - for tooltip functionality.](https://github.com/skydoves/Balloon)
+- [Jetpack Navigation](https://developer.android.com/guide/navigation)
 
 ## Screenshots
 
