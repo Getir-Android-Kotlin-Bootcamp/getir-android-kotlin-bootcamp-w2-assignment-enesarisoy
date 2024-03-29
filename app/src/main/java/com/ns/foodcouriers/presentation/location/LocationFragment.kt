@@ -134,7 +134,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     private fun searchLocation() {
         autocompleteSupportFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onError(p0: Status) {
-                Toast.makeText(requireContext(), "Some error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "You didn't search location.", Toast.LENGTH_SHORT).show()
                 Log.d("Location Fragment", "onError: ${p0.statusMessage}")
             }
 

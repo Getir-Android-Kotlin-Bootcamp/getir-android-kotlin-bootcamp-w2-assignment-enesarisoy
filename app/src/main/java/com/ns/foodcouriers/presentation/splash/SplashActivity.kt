@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ns.foodcouriers.MainActivity
 import com.ns.foodcouriers.R
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         val intent = Intent(this@SplashActivity, MainActivity::class.java)
         GlobalScope.launch {
-//            delay(4000)
+            delay(4000)
             startActivity(intent)
         }
 
