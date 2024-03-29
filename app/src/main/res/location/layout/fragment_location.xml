@@ -179,7 +179,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/poppins_medium"
                 android:lineHeight="20dp"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:text="109, Freedom Way, Off Lekki Phase\nVictoria Island, Lagos."
                 android:textColor="#09051C"
                 android:textSize="15sp"

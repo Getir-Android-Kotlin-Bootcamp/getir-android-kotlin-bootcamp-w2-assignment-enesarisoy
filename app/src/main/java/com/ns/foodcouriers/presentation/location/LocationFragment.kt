@@ -2,7 +2,6 @@ package com.ns.foodcouriers.presentation.location
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
@@ -58,6 +57,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Enable places api
         Places.initialize(requireContext(), BuildConfig.MAPS_API_KEY)
     }
 
@@ -66,6 +66,14 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+        return inflater.inflate(R.layout.fragment_location, container, false)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Checking the permissions before the view created.
         if (ActivityCompat.checkSelfPermission(
@@ -84,14 +92,14 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 LOCATION_PERMISSION_REQUEST_CODE
             )
         }
-        return inflater.inflate(R.layout.fragment_location, container, false)
-    }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        // We need for get the current location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         tvAddress = view.findViewById(R.id.tvAddress)
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.poppins_medium)
+        tvAddress.typeface = typeface
+
         autocompleteSupportFragment =
             childFragmentManager.findFragmentById(R.id.autoCompleteFragment) as AutocompleteSupportFragment
 
@@ -102,9 +110,32 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 Place.Field.LAT_LNG
             )
         )
+
+
+        // To display the map on the screen
+        val mapFragment: SupportMapFragment =
+            childFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+
+        searchLocation()
+
+        onClickMyLocation(view)
+
+        customizeAutoCompleteSupportFragmentComponents()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        setupMap()
+    }
+
+    private fun searchLocation() {
         autocompleteSupportFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onError(p0: Status) {
                 Toast.makeText(requireContext(), "Some error", Toast.LENGTH_SHORT).show()
+                Log.d("Location Fragment", "onError: ${p0.statusMessage}")
             }
 
             override fun onPlaceSelected(place: Place) {
@@ -114,20 +145,11 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         })
-
-        // To display the map on the screen
-        val mapFragment: SupportMapFragment =
-            childFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
-        // We need for get the current location
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        onClickMarker(view)
-
-        customizeAutoCompleteSupportFragmentComponents()
     }
 
+    /**
+     *  This function basically customize the default components that came from AutoSupportFragment
+     */
     private fun customizeAutoCompleteSupportFragmentComponents() {
         autocompleteSupportFragment.requireView()
             .findViewById<View>(com.google.android.libraries.places.R.id.places_autocomplete_search_button)?.visibility =
@@ -151,9 +173,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             .findViewById<EditText>(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
             ?.textSize = 18f
 
-
     }
-
 
     private fun setAddressToTextView(addresses: List<Address>?) {
         addresses?.let {
@@ -162,7 +182,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 val addressText = address.getAddressLine(0)
                 tvAddress.text = addressText
 
-                Log.d("Main Activity", "Current Location: $address")
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -175,33 +194,13 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        setupMap()
-    }
-
+    @SuppressLint("MissingPermission")
     private fun setupMap() {
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST_CODE
-            )
-            return
-        }
 
         mMap.isMyLocationEnabled = false
 
+        getCurrentLocation()
 
-        getLocation()
         // Set marker to map when we click
         mMap.setOnMapLongClickListener {
             val geocoder = Geocoder(requireContext())
@@ -211,13 +210,14 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                     it.longitude,
                     1
                 )
+            // After we found the address on map, place the marker
             placeMarkerOnMap(it, mMap.cameraPosition.zoom)
             setAddressToTextView(currentAddress)
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLocation(isFirst: Boolean = true) {
+    private fun getCurrentLocation(isFirstStart: Boolean = true) {
         // Get current location info
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             location?.let {
@@ -237,26 +237,14 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                     )
 
                 // We're getting the address of the current location
-                addresses?.let {
-                    if (it.isNotEmpty()) {
-                        val address = addresses[0]
-                        val addressText = address.getAddressLine(0)
-                        tvAddress.text = addressText
-
-                        Log.d("Main Activity", "Current Location: $address")
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "No address found",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
-                }
+                setAddressToTextView(addresses)
 
                 // Mark the location
-                if (isFirst) {
-                    placeMarkerOnMap(LatLng(location.latitude, location.longitude))
+                if (isFirstStart) {
+                    placeMarkerOnMap(
+                        LatLng(location.latitude, location.longitude),
+                        currentLocationInfo = "My Location"
+                    )
                 } else {
                     placeMarkerOnMap(LatLng(location.latitude, location.longitude), zoomLevel = 12f)
 
@@ -265,8 +253,10 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun onClickMarker(view: View) {
+    private fun onClickMyLocation(view: View) {
         val ivMarkerCard = view.findViewById<ImageView>(R.id.ivMarkerCard)
+
+        // Show the user a tip
         val balloon = Balloon.Builder(requireContext())
             .setWidth(BalloonSizeSpec.WRAP)
             .setHeight(BalloonSizeSpec.WRAP)
@@ -283,17 +273,22 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             .setBalloonAnimation(BalloonAnimation.ELASTIC)
             .build()
         ivMarkerCard.showAlignTop(balloon)
+
         ivMarkerCard.setOnClickListener {
-            getLocation(isFirst = false)
+            getCurrentLocation(isFirstStart = false)
         }
     }
 
-    private fun placeMarkerOnMap(currentLatLong: LatLng, zoomLevel: Float = 5f) {
+    private fun placeMarkerOnMap(
+        currentLatLong: LatLng,
+        zoomLevel: Float = 5f,
+        currentLocationInfo: String = ""
+    ) {
 
         mMap.clear()
 
         val markerOptions = MarkerOptions().position(currentLatLong)
-        markerOptions.title("Current Location")
+        markerOptions.title(currentLocationInfo)
         mMap.addMarker(markerOptions)
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLong, zoomLevel))
     }
@@ -308,12 +303,10 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 Log.d("onRequestPermissionsResult", "permission granted")
 
-                getLocation()
+                getCurrentLocation()
             } else {
-                Log.d(
-                    "onRequestPermissionsResult",
-                    "YOOOOU DIDN'TTTT GIVE A PERMISSION. YOOOU SHALL NOT PASSSSS!!!!"
-                )
+                Toast.makeText(requireContext(), "Give me permission pls.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
